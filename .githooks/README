@@ -1,0 +1,74 @@
+
+GIT HOOKS & GPG SIGNING SETUP
+==============================
+
+A lightweight guide to set up local Git hooks and GPG-signed commits
+for secure and consistent workflows.
+
+This configuration ensures every commit follows the correct message
+format and is cryptographically signed.
+
+------------------------------------------------------------------------
+1. Make Git Hooks Executable
+------------------------------------------------------------------------
+
+Enable executable permissions for your local Git hooks:
+
+    > chmod +x .githooks/commit-msg
+    # Optional:
+    # chmod +x .githooks/pre-commit
+    # chmod +x .githooks/pre-push
+
+Tell Git to use your local .githooks directory:
+
+    > git config core.hooksPath .githooks
+
+------------------------------------------------------------------------
+2. Enable GPG Commit Signing
+------------------------------------------------------------------------
+
+a. Set your GPG key
+
+List your available GPG keys:
+
+    > gpg --list-secret-keys --keyid-format LONG
+
+Example output:
+
+    sec   rsa4096/ABCD1234EF567890 2024-05-12 [SC]
+          uid [ultimate] Isai Gordeev <isai@example.com>
+    sub   rsa4096/XYZ1234567890ABC 2024-05-12 [E]
+
+Use the part after the slash (/) (e.g., ABCD1234EF567890) as your <key-id>.
+
+Then configure Git to use it:
+
+    > git config --global user.signingkey <key-id>
+    > git config --global commit.gpgsign true
+
+------------------------------------------------------------------------
+3. Verify Hooks and Signing
+------------------------------------------------------------------------
+
+Create a test commit:
+
+    > git commit -m "chore(setup): verify gpg signing"
+
+Then check that it's properly signed:
+
+    > git log --show-signature -1
+
+Example output:
+
+    gpg: Signature made Fri  2 Nov 2025 11:42:21 AM UTC
+    gpg: Good signature from "Isai Gordeev <isai@gordeev.ru>" [ultimate]
+
+------------------------------------------------------------------------
+4. Done
+------------------------------------------------------------------------
+
+You now have:
+
+- Local Git hooks for consistent commit formatting
+- GPG-signed commits for verified authorship
+- A secure, professional Git setup ready for collaborative work
