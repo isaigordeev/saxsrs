@@ -2,13 +2,30 @@
 name = "saxsrs"
 version = "0.1.0"
 edition = "2021"
+description = "High-performance SAXS data processing runtime"
 
 [lib]
 name = "saxsrs"
-crate-type = ["cdylib"]
+crate-type = ["cdylib", "rlib"]
 
 [dependencies]
-pyo3 = { version = "0.22", features = ["extension-module"] }
-numpy = "0.22"
+# Numeric computing
 ndarray = "0.16"
 rayon = "1.10"
+
+# Async runtime
+tokio = { version = "1.43", features = ["rt-multi-thread", "sync", "macros", "time"] }
+
+# Fitting/optimization
+nalgebra = "0.33"
+
+# FFI utilities
+libc = "0.2"
+num_cpus = "1.16"
+
+[dev-dependencies]
+criterion = "0.5"
+
+[build-dependencies]
+cbindgen = "0.27"
+

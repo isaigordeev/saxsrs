@@ -1,0 +1,43 @@
+# cbindgen configuration for generating C headers
+
+[defines]
+
+[export]
+include = []
+exclude = []
+prefix = "saxs_"
+item_types = ["constants", "globals", "enums", "structs", "unions", "typedefs", "opaque", "functions"]
+
+[export.rename]
+
+[fn]
+rename_args = "SnakeCase"
+
+[struct]
+rename_fields = "SnakeCase"
+
+[enum]
+rename_variants = "ScreamingSnakeCase"
+prefix_with_name = true
+
+[const]
+allow_static_const = true
+
+[macro_expansion]
+bitflags = false
+
+[parse]
+parse_deps = false
+clean = false
+
+[parse.expand]
+crates = []
+
+[language]
+# Generate C header
+#language = "C"
+
+[ctype]
+
+[documentation]
+style = "c"
